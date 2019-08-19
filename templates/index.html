@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Wallet</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- MY SCRIPTS AND CSS -->
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/custom.css">
+    <link rel="stylesheet" href="../style/home.css">
+    <link rel="stylesheet" href="../style/payments.css">
+    <link rel="stylesheet" href="../style/plans.css">
+    <link rel="stylesheet" href="../style/settings.css">
+
+    <script type="text/javascript" src="../scripts/home.js"></script>
+    <script type="text/javascript" src="../scripts/payments.js"></script>
+    <script type="text/javascript" src="../scripts/plans.js"></script>
+    <script type="text/javascript" src="../scripts/settings.js"></script>
+
+    <script type="text/javascript" src="../scripts/nav.js"></script>
+
+    <link rel="stylesheet" href="../style/fonts.css">
+  </head>
+  <body>
+    
+    <div class="titlebar"></div>
+    
+    <!-- MAIN -->
+    <div class="wrapper" id="root">
+      <!-- SIDEBAR -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+        </div>
+
+        <div id="balance-container">
+          <h6 id="balance-date"></h6>
+          <h1 id="balance"></h1>
+          <div class="spinner-border mt-5 d-none"  role="status" id="balance-spinner">
+              <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <div id="add-balance-container">
+          <button type="button" class="btn btn-balance-change" id="remove-balance" disabled><i class="fas fa-minus" aria-hidden="true"></i></button>
+          <input type="number" id="balance-input" class="form-control">
+          <button type="button" class="btn btn-balance-change" id="add-balance" disabled><i class="fas fa-plus" aria-hidden="true"></i></button>
+        </div>
+
+        <!-- Add buttons -->
+        <div id="add-buttons">
+          <!-- Add payment button -->
+          <button type="button" class="btn" id="add-plan" id="add-payment-button" data-toggle="modal" data-target="#planModal">
+              <i class="fas fa-calendar-plus"></i>
+          </button>
+
+          <!-- Add plan button -->
+          <button type="button" class="btn" id="add-payment" id="add-payment-button" data-toggle="modal" data-target="#paymentModal">
+              <i class="fas fa-university"></i>
+          </button>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="home">Home</a>
+            </li>
+            <li>
+                <a href="plans">Plans</a>
+            </li>
+            <li>
+                <a href="payments">Payments</a>
+            </li>
+            <li>
+                <a href="settings">Settings</a>
+            </li>
+        </ul>
+      </nav>
+
+      <!-- CONTENT -->
+      <div id="index_content">
+        <div id="home" class="d-flex">
+          <div id="future-container">
+              <ul class='list-unstyled' id="future-list">
+                  
+              </ul>
+          </div>
+        </div>
+
+        <div id="plans" class="d-none">
+            <div id="plan-list">
+                <ul class='list-unstyled' id="plans-container">
+        
+                </ul>
+            </div>  
+            <hr id="plans-divider">
+            <div id="after-plan-container">
+                <h3 id="after-plan-amount"></h3>
+            </div>   
+        </div>
+
+        <div id="payments" class="d-none">
+          <div id="payment-list">
+              <ul class='list-unstyled' id="months-container">
+      
+              </ul>
+          </div>
+        </div>
+
+        <div id="settings" class="d-none">
+            <button class="btn btn-primary" id="log-out">Log Out</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PLAN MODAL -->
+    <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="plan-dialog">
+          <div class="modal-content" id="plan-modal">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Plan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div id="add-plan-container">
+              <div id="add-plan-content">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter name" id="add-plan-name">
+                </div> 
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Enter amount" id="add-plan-amount">
+                </div>
+                <div id="plan-check-boxes">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="typeRadios" id="profit" value="option1" checked>
+                        <label class="form-check-label" for="profit">
+                            Profit
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="typeRadios" id="expense" value="option2">
+                        <label class="form-check-label" for="expense">
+                            Expense
+                        </label>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn" data-dismiss="modal">Close</button>
+              <button type="button" id="save-plan" class="btn" data-dismiss="modal">Save</button>
+              <button type="button" id="edit-plan" class="btn d-none" data-dismiss="modal">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" id="payment-dialog">
+        <div class="modal-content" id="payment-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div id="add-payment-container">
+              <div id="add-payment-content"> 
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter name" id="add-payment-name">
+                </div> 
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Enter amount" id="add-payment-amount">
+                </div>
+                <select class="form-control" id="payment-regularity">
+                    <option selected>Single</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                    <option>Yearly</option>
+                </select>
+                <input type="text" class="datepicker" id="payment-date">
+                <div id="payment-check-boxes">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="incoming" value="option1" checked>
+                        <label class="form-check-label" for="profit">
+                            Incoming
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="outgoing" value="option2">
+                        <label class="form-check-label" for="expense">
+                            Outgoing
+                        </label>
+                    </div>
+                </div>
+              </div>  
+            </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">Close</button>
+            <button type="button" id="save-payment" class="btn" data-dismiss="modal">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+        window.Bootstrap = require('bootstrap');
+    </script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+  </body>
+</html>

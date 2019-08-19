@@ -1,0 +1,222 @@
+@import "colors";
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+// DATERANGEPICKER
+.daterangepicker {
+    border-radius: 10px;
+    td.in-range {
+        background-color: $primaryLight;
+    }
+    td.start-date {
+        background-color: $primary;
+        &:hover {
+            background-color: $primaryLight;
+        }
+    } 
+    td.end-date {
+        background-color: $primary;
+        &:hover {
+            background-color: $primaryLight;
+        }
+    }
+    .btn-primary {
+        background-color: $primary;
+    }
+}
+
+.datepicker {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+// 
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  height: 28px;
+  width: 100%;
+  position: absolute;
+}
+
+body {
+    background: $white;
+    overflow: hidden;
+    height: 800px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+}
+
+
+// SIDEBAR
+#sidebar {
+    background: $primaryDark;
+    color: $white;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    .sidebar-header {
+        padding-top: 30px;
+        padding-left: 10px;
+        background: $primaryDark;
+    }
+    #balance-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        #balance-date {
+            text-align: center;
+            min-height: 19px;
+        }
+        #balance {
+            text-align: center;
+        }
+        #balance-spinner {
+            min-height: 36px;
+            min-width: 36px;
+            margin: 10px !important;
+        }
+    }
+    #add-balance-container {
+        display: flex;
+        flex-direction: row;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        #balance-input {
+            border-radius: 0%;
+        }
+        #remove-balance {
+            background-color: $primary;
+            color: $white;
+            border-bottom-right-radius: 0%;
+            border-top-right-radius: 0%;
+            &:hover {
+                background-color: $primaryLight;
+            }
+        }
+        #add-balance {
+            background-color: $colorAccent;
+            color: $white;
+            border-bottom-left-radius: 0%;
+            border-top-left-radius: 0%;
+            &:hover {
+                background-color: $colorAccentLight;
+            }
+        }
+    }
+    #add-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        .btn {
+            color: $white;
+            &:hover {
+                color: $primaryLight;
+            }
+        }
+    }
+    ul {
+        li {
+            a {
+                color: $white;
+                padding: 10px 10px 10px 20px;
+                font-size: 1.1em;
+                display: block;
+            }
+            a:hover {
+                color: $primary;
+                background: #fff;
+                text-decoration: none;
+            }
+        }
+        .active {
+            background: $primary;
+            a {
+                color: $white;
+            }
+        }
+    }
+}
+
+// Content
+#content {
+    width: 100%;
+    height: 100%;
+}
+
+// PLAN MODAL
+#plan-dialog {
+    max-width: 300px;
+    #plan-modal {
+        #add-plan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0px;
+            #add-plan-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 70%;
+            }
+        }
+    }
+}
+
+// PAYMENT MODAL
+#payment-dialog {
+    max-width: 350px;
+    #payment-modal {
+        #add-payment-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0px;
+            #add-payment-content {
+                max-width: 220px;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                width: 70%;
+                #payment-regularity {
+                    margin-bottom: 16px;
+                    text-align: center;
+                }
+                #payment-date {
+                    margin-bottom: 16px;
+                    text-align: center;
+                }
+                #payment-check-boxes {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+@import "colors";
+
+.btn {
+    border-radius: 5px;
+    .focus {
+        outline: none;
+        box-shadow: none;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .active {
+        background-color: none;
+        border-color: none;
+        box-shadow: none;
+    }
+    &:active {
+        background-color: none;
+        border-color: none;
+        box-shadow: none;
+    }
+}
+
+.btn-success {
+    background-color: $primary;
+    &:hover {
+        background-color: $primaryLight;
+    }
+    .focus {
+        outline: none;
+        box-shadow: none;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .active {
+        background-color: none;
+        border-color: none;
+        box-shadow: none;
+    }
+    &:active {
+        background-color: none;
+        border-color: none;
+        box-shadow: none;
+    }
+}
+
+.btn-danger {
+    background-color: $colorAccent;
+    border-color: $colorAccent;
+    &:hover {
+        background-color: $colorAccentLight;
+        border-color: $colorAccentLight;
+    }
+    &:focus {
+        box-shadow: none;
+    }
+    &:active {
+        background-color: $colorAccentLight;
+        border-color: $colorAccentLight;
+        box-shadow: none;
+    }
+}
+
+.card {
+    border-radius: 10px;
+}
+
+a {
+    color: $primary;
+    &:hover {
+        color: $primaryLight;
+    }
+}

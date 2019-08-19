@@ -1,0 +1,34 @@
+{
+  "name": "bankapp",
+  "version": "1.0.0",
+  "description": "A fiscal management app",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "finance-management",
+    "mac": {
+      "category": "finance-management"
+    }
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "crypto-random-string": "^3.0.1",
+    "electron-settings": "^3.2.0",
+    "daterangepicker": "^3.0.5",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "rest-api-handler": "^2.1.0",
+    "sha256": "^0.2.0"
+  },
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-builder": "^21.2.0"
+  },
+  "author": "Magnus Paal",
+  "license": "ISC"
+}

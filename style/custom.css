@@ -1,0 +1,76 @@
+.btn {
+  border-radius: 5px;
+}
+.btn .focus {
+  outline: none;
+  box-shadow: none;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+.btn .active {
+  background-color: none;
+  border-color: none;
+  box-shadow: none;
+}
+.btn:active {
+  background-color: none;
+  border-color: none;
+  box-shadow: none;
+}
+
+.btn-success {
+  background-color: #673ab7;
+}
+.btn-success:hover {
+  background-color: #9a67ea;
+}
+.btn-success .focus {
+  outline: none;
+  box-shadow: none;
+}
+.btn-success:focus {
+  outline: none;
+  box-shadow: none;
+}
+.btn-success .active {
+  background-color: none;
+  border-color: none;
+  box-shadow: none;
+}
+.btn-success:active {
+  background-color: none;
+  border-color: none;
+  box-shadow: none;
+}
+
+.btn-danger {
+  background-color: #e91e63;
+  border-color: #e91e63;
+}
+.btn-danger:hover {
+  background-color: #ff6090;
+  border-color: #ff6090;
+}
+.btn-danger:focus {
+  box-shadow: none;
+}
+.btn-danger:active {
+  background-color: #ff6090;
+  border-color: #ff6090;
+  box-shadow: none;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+a {
+  color: #673ab7;
+}
+a:hover {
+  color: #9a67ea;
+}
+
+/*# sourceMappingURL=custom.css.map */

@@ -1,0 +1,58 @@
+#payments {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+#payments #payment-list {
+  margin: 0px 40px 40px 40px;
+  min-width: 288px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+#payments #payment-list #months-container {
+  height: 100%;
+  width: 100%;
+  margin: 0%;
+  padding-top: 21px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#payments #payment-list #months-container .month-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+#payments #payment-list #months-container .month-item .month-name {
+  margin-top: 20px;
+}
+#payments #payment-list #months-container .month-item .card {
+  overflow: hidden;
+}
+#payments #payment-list #months-container .month-item .card .card-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+}
+#payments #payment-list #months-container .month-item .card .card-body .payment-day {
+  height: 100%;
+  width: 73px;
+  margin: 0px;
+  background-color: #320b86;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+#payments #payment-list #months-container .month-item .card .card-body .payment-info {
+  margin-left: 10px;
+  margin-top: 8px;
+}
+
+/*# sourceMappingURL=payments.css.map */

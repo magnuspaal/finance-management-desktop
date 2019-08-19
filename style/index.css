@@ -1,0 +1,206 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.daterangepicker {
+  border-radius: 10px;
+}
+.daterangepicker td.in-range {
+  background-color: #9a67ea;
+}
+.daterangepicker td.start-date {
+  background-color: #673ab7;
+}
+.daterangepicker td.start-date:hover {
+  background-color: #9a67ea;
+}
+.daterangepicker td.end-date {
+  background-color: #673ab7;
+}
+.daterangepicker td.end-date:hover {
+  background-color: #9a67ea;
+}
+.daterangepicker .btn-primary {
+  background-color: #673ab7;
+}
+
+.datepicker {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  height: 28px;
+  width: 100%;
+  position: absolute;
+}
+
+body {
+  background: #ffffff;
+  overflow: hidden;
+  height: 800px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+#sidebar {
+  background: #320b86;
+  color: #ffffff;
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+}
+#sidebar .sidebar-header {
+  padding-top: 30px;
+  padding-left: 10px;
+  background: #320b86;
+}
+#sidebar #balance-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#sidebar #balance-container #balance-date {
+  text-align: center;
+  min-height: 19px;
+}
+#sidebar #balance-container #balance {
+  text-align: center;
+}
+#sidebar #balance-container #balance-spinner {
+  min-height: 36px;
+  min-width: 36px;
+  margin: 10px !important;
+}
+#sidebar #add-balance-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+#sidebar #add-balance-container #balance-input {
+  border-radius: 0%;
+}
+#sidebar #add-balance-container #remove-balance {
+  background-color: #673ab7;
+  color: #ffffff;
+  border-bottom-right-radius: 0%;
+  border-top-right-radius: 0%;
+}
+#sidebar #add-balance-container #remove-balance:hover {
+  background-color: #9a67ea;
+}
+#sidebar #add-balance-container #add-balance {
+  background-color: #e91e63;
+  color: #ffffff;
+  border-bottom-left-radius: 0%;
+  border-top-left-radius: 0%;
+}
+#sidebar #add-balance-container #add-balance:hover {
+  background-color: #ff6090;
+}
+#sidebar #add-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+#sidebar #add-buttons .btn {
+  color: #ffffff;
+}
+#sidebar #add-buttons .btn:hover {
+  color: #9a67ea;
+}
+#sidebar ul li a {
+  color: #ffffff;
+  padding: 10px 10px 10px 20px;
+  font-size: 1.1em;
+  display: block;
+}
+#sidebar ul li a:hover {
+  color: #673ab7;
+  background: #fff;
+  text-decoration: none;
+}
+#sidebar ul .active {
+  background: #673ab7;
+}
+#sidebar ul .active a {
+  color: #ffffff;
+}
+
+#content {
+  width: 100%;
+  height: 100%;
+}
+
+#plan-dialog {
+  max-width: 300px;
+}
+#plan-dialog #plan-modal #add-plan-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px;
+}
+#plan-dialog #plan-modal #add-plan-container #add-plan-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+
+#payment-dialog {
+  max-width: 350px;
+}
+#payment-dialog #payment-modal #add-payment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px;
+}
+#payment-dialog #payment-modal #add-payment-container #add-payment-content {
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 70%;
+}
+#payment-dialog #payment-modal #add-payment-container #add-payment-content #payment-regularity {
+  margin-bottom: 16px;
+  text-align: center;
+}
+#payment-dialog #payment-modal #add-payment-container #add-payment-content #payment-date {
+  margin-bottom: 16px;
+  text-align: center;
+}
+#payment-dialog #payment-modal #add-payment-container #add-payment-content #payment-check-boxes {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=index.css.map */

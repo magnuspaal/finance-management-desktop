@@ -2,6 +2,8 @@ var $ = require("../node_modules/jquery/dist/jquery.min");
 var service = require("../scripts/service");
 var sha256 = require('sha256');
 const {ipcRenderer} = require('electron');
+var { Api } =  require('rest-api-handler');
+var api = new Api('https://magnuspaal.com');
 
 $(document).ready(function(e) {
 

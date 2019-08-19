@@ -64,7 +64,7 @@ function findDayAmounts(data, currentBalance) {
 
     var dayAmounts = new Object();
 
-    amount = currentBalance;
+    amount = parseFloat(currentBalance);
 
     $.each(data, function(index, value) {
         date = new Date(value.date.year, value.date.month - 1, value.date.day);
@@ -75,7 +75,7 @@ function findDayAmounts(data, currentBalance) {
             amount += parseFloat(value.amount);
         }
 
-        dayAmounts[date] = amount.toFixed(2);
+        dayAmounts[date] = parseFloat(amount).toFixed(2);
     })
     return dayAmounts;
 }

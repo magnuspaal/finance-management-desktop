@@ -4,7 +4,8 @@ var { ipcRenderer } = require('electron');
 var { Api } =  require('rest-api-handler');
 var api = new Api('https://magnuspaal.com');
 
-var constants = require("../utils/constants")
+var constants = require("../utils/constants");
+var nav = require("../scripts/nav");
 
 module.exports = {
   refreshPayments: refreshPayments
@@ -32,12 +33,12 @@ function refreshPayments(userId) {
       $('#month-item-' + index).append('<div id="month-payments-' + index + '"></div>');
       payments = getPaymentsOfMonth(date, data);
       $.each(payments, function( index_payment, value_payment) {
-        $('#month-payments-' + index).append('<div class="card shadow-sm" style="margin-bottom: 20px;" id="payment-card-' + value_payment['id'] + '"></div>');
+        $('#month-payments-' + index).append('<div date="' + (date.getMonth() + 1) + "/" + value_payment.date.day + "/" + date.getFullYear() + '" class="card shadow-sm payment-card" style="margin-bottom: 20px;" id="payment-card-' + value_payment['id'] + '" data-toggle="modal" data-target="#paymentModal" payment-id="' + value_payment['id'] + '" hash="' + value_payment['hash'] + '"></div>');
         $('#payment-card-' + value_payment['id']).append('<div class="card-body card-payment-body" id="payment-card-body-' + value_payment['id'] + '"></div>');
         $('#payment-card-body-' + value_payment['id']).append('<h3 class="payment-day">' + value_payment.date.day + '</h3>');
         $('#payment-card-body-' + value_payment['id']).append('<div class="payment-info" id="payment-info-' + value_payment['id'] + '"></div>')
-        $('#payment-info-' + value_payment['id']).append('<h5>' + value_payment.name + '</h5>');
-        $('#payment-info-' + value_payment['id']).append('<h6>' + (value_payment['type'] == constants.INCOMING ? "+" : "-") + value_payment.amount + '</h6>');
+        $('#payment-info-' + value_payment['id']).append('<h6 id=' + "payment-name" + '>' + value_payment.name + '</h6>');
+        $('#payment-info-' + value_payment['id']).append('<h6 id=' + "payment-amount" + '>' + (value_payment['type'] == constants.INCOMING ? "+" : "-") + value_payment.amount + '</h6>');
         if (value_payment['datePassed'] == 1) {
           $('#payment-info-' + value_payment['id']).append('<div id="payment-buttons-' + value_payment['id'] + '" class="payment-buttons"></div>');
           $('#payment-buttons-' + value_payment['id']).append('<a id="' + value_payment['id'] + '" type="add" class="card-link">Add</a>');
@@ -50,6 +51,38 @@ function refreshPayments(userId) {
           state = type === "add" ? constants.CONFIRMED : constants.CANCELLED;
           changePaymentState(id, state);
         });
+
+        // Edit payment when its card is clicked.
+        $('.payment-card').click(function(e) {
+          $('#payment-modal-title').html("Edit Payment");
+          
+          $('#payment-regularity').addClass('d-none');
+
+          $('#payment-regularity').removeClass('d-block');
+
+          $("#add-payment-name").val($(this).find("#payment-name").html());
+
+          $("#save-payment").addClass("d-none");
+          $("#edit-payment").removeClass("d-none");
+
+          amount = $(this).find("#payment-amount").html();
+          date = $(this).attr("date");
+          
+          $("#add-payment-amount").val(amount.substring(1));
+
+          if (amount.charAt(0) === "+") {
+            $("#incoming").prop("checked",  true);
+            $("#outgoing").prop("checked",  false);
+          } else {
+            $("#incoming").prop("checked",  false);
+            $("#outgoing").prop("checked",  true);
+          }
+
+          nav.setDatePickerDate(date, date);
+
+          $("#paymentModal").attr("payment-id", $(this).attr("payment-id"));
+          $("#paymentModal").attr("hash", $(this).attr("hash"));
+        })
       })
     });
   });

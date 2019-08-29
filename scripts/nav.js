@@ -7,6 +7,14 @@ var { ipcRenderer } = require('electron');
 var service = require("../scripts/service");
 var constants = require("../utils/constants");
 
+module.exports = {
+  setDatePickerDate: function(dateBegin, dateEnd) {
+    var drp = $('.datepicker').data('daterangepicker');
+    drp.setStartDate(dateBegin);
+    drp.setEndDate(dateEnd);
+  }
+}
+
 $(document).ready(function(e) {
 
   service.refreshBalance();
@@ -66,6 +74,17 @@ $(document).ready(function(e) {
   /////////////////////////////////////////////////////////
 
   //// ADD PLAN ///////////////////////////////////////////
+  $("#add-plan-button").click(function(e) {
+    $("#add-plan-name").val("");
+    $("#add-plan-amount").val("");
+    $("#plan-modal-title").html("New Plan");
+    $("#profit").prop("checked",  true);
+    $("#expense").prop("checked",  false);
+    $("#edit-plan").addClass("d-none");
+    $("#save-plan").removeClass("d-none");
+  })
+
+  $("#save-plan").unbind('click');
   $("#save-plan").click(function(e) {
     var name = $("#add-plan-name").val();
     var amount = $("#add-plan-amount").val();
@@ -94,6 +113,23 @@ $(document).ready(function(e) {
   ////////////////////////////////////////////////////////////
 
   //// ADD PAYMENT ///////////////////////////////////////////
+  $('#add-payment-button').click(function(e) {
+    $('#payment-regularity').addClass('d-block');
+    $('#payment-regularity').removeClass('d-none');
+
+    $("#add-payment-name").val("");
+    $("#add-payment-amount").val("");
+    $("#payment-modal-title").html("New Payment");
+
+    $("#edit-payment").addClass("d-none");
+    $("#save-payment").removeClass("d-none");
+  })
+
+  $('#paymentModal').on('hidden.bs.modal', function(e) {
+    $('#payment-regularity').val("Single");
+    setSingleDatePicker();
+  })
+  
   $("#payment-regularity").change(function() {
     regularity = $('#payment-regularity').val();
     if(regularity == constants.SINGLE) {
@@ -103,6 +139,7 @@ $(document).ready(function(e) {
     }
   })
 
+  $("#save-payment").unbind('click');
   $("#save-payment").click(function() {
     userId = ipcRenderer.sendSync('get-id');
 
@@ -167,6 +204,52 @@ $(document).ready(function(e) {
     })
   }
   ////////////////////////////////////////////////////////////
+
+  $("#edit-plan").unbind('click');
+  $("#edit-plan").click(function(e) {
+    console.log("heyyy");
+    api.put('wallet/api/planitem/edit.php', {
+      id: id,
+      name: $("#add-plan-name").val(),
+      amount: $("#add-plan-amount").val(),
+      type: $("#profit").prop("checked") ? constants.PROFIT : constants.EXPENSE
+    }).then(function(response) {
+      $("#add-plan-name").val("");
+      $("#add-plan-amount").val("");
+      $("#profit").prop("checked",  true);
+      $("#expense").prop("checked",  false);
+      $("#save-plan").removeClass("d-none");
+      $("#edit-plan").addClass("d-none");
+      refreshPlans(ipcRenderer.sendSync("get-id"));
+    })
+  })
+
+  $("#edit-payment").unbind('click');
+  $("#edit-payment").click(function(e) {
+
+    date = $('.datepicker').val().split("/");
+    date = {month: parseInt(date[0], 10), day: parseInt(date[1], 10), year: parseInt(date[2])}
+
+    hash = $('#paymentModal').attr("hash");
+
+    id = hash != null ? null : $('#paymentModal').attr("payment-id");
+
+    api.put('wallet/api/payment/edit.php', {
+      id: id,
+      hash: hash,
+      date: date,
+      name: $("#add-payment-name").val(),
+      amount: $("#add-payment-amount").val(),
+      type: $("#income").prop("checked") ? constants.INCOMING : constants.OUTGOING
+    }).then(function(response) {
+      $("#add-payment-name").val("");
+      $("#add-payment-amount").val("");
+      $("#incoming").prop("checked",  true);
+      $("#outgoing").prop("checked",  false);
+      refreshPayments(ipcRenderer.sendSync("get-id"));
+      service.refreshBalance();
+    })
+  })
 });
 
 

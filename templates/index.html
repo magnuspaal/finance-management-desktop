@@ -56,13 +56,13 @@
 
         <!-- Add buttons -->
         <div id="add-buttons">
-          <!-- Add payment button -->
-          <button type="button" class="btn" id="add-plan" id="add-payment-button" data-toggle="modal" data-target="#planModal">
+          <!-- Add plan button -->
+          <button type="button" class="btn" id="add-plan-button" data-toggle="modal" data-target="#planModal">
               <i class="fas fa-calendar-plus"></i>
           </button>
 
-          <!-- Add plan button -->
-          <button type="button" class="btn" id="add-payment" id="add-payment-button" data-toggle="modal" data-target="#paymentModal">
+          <!-- Add payment button -->
+          <button type="button" class="btn" id="add-payment-button" data-toggle="modal" data-target="#paymentModal">
               <i class="fas fa-university"></i>
           </button>
         </div>
@@ -121,11 +121,11 @@
     </div>
 
     <!-- PLAN MODAL -->
-    <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" plan-id="">
         <div class="modal-dialog" role="document" id="plan-dialog">
           <div class="modal-content" id="plan-modal">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">New Plan</h5>
+              <h5 class="modal-title" id="plan-modal-title"></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -164,11 +164,11 @@
       </div>
 
     <!-- PAYMENT MODAL -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" payment-id="" hash="">
       <div class="modal-dialog" role="document" id="payment-dialog">
         <div class="modal-content" id="payment-modal">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
+            <h5 class="modal-title" id="payment-modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -208,6 +208,25 @@
           <div class="modal-footer">
             <button type="button" class="btn" data-dismiss="modal">Close</button>
             <button type="button" id="save-payment" class="btn" data-dismiss="modal">Save</button>
+            <button type="button" id="edit-payment" class="btn d-none" data-dismiss="modal">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="selectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" id="selection-dialog">
+        <div class="modal-content" id="selection-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="selection-modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn" data-dismiss="modal">Close</button>
+              <button type="button" id="save-selection" class="btn" data-dismiss="modal">Save</button>
           </div>
         </div>
       </div>

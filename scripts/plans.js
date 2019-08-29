@@ -57,10 +57,10 @@ function refreshPlans(userId) {
       $(".plan-card").click(function(e){
         $("#save-plan").addClass("d-none");
         $("#edit-plan").removeClass("d-none");
+        $("#plan-modal-title").html("Edit Plan");
 
         $("#add-plan-name").val($(this).find("#plan-name").html());
 
-        id = $(this).attr("plan-id");
         amount = $(this).find("#plan-amount").html();
         
         $("#add-plan-amount").val(amount.substring(1));
@@ -73,22 +73,7 @@ function refreshPlans(userId) {
           $("#expense").prop("checked",  true);
         }
 
-        $("#edit-plan").click(function(e) {
-          api.put('wallet/api/planitem/edit.php', {
-            id: id,
-            name: $("#add-plan-name").val(),
-            amount: $("#add-plan-amount").val(),
-            type: $("#profit").prop("checked") ? constants.PROFIT : constants.EXPENSE
-          }).then(function(response) {
-            $("#add-plan-name").val("");
-            $("#add-plan-amount").val("");
-            $("#profit").prop("checked",  true);
-            $("#expense").prop("checked",  false);
-            $("#save-plan").removeClass("d-none");
-            $("#edit-plan").addClass("d-none");
-            refreshPlans(ipcRenderer.sendSync("get-id"));
-          })
-        })
+        $("#planModal").attr("plan-id", $(this).attr("plan-id"));
       });
 
     });

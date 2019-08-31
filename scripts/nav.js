@@ -1,4 +1,6 @@
-var $ = require("../node_modules/jquery/dist/jquery");
+var $ = require('jquery');
+require('popper.js')
+require('bootstrap');
 
 var sha256 = require('sha256');
 var crs = require('crypto-random-string');
@@ -82,6 +84,7 @@ $(document).ready(function(e) {
     $("#expense").prop("checked",  false);
     $("#edit-plan").addClass("d-none");
     $("#save-plan").removeClass("d-none");
+    $('#delete-plan').addClass('d-none');
   })
 
   $("#save-plan").unbind('click');
@@ -123,6 +126,10 @@ $(document).ready(function(e) {
 
     $("#edit-payment").addClass("d-none");
     $("#save-payment").removeClass("d-none");
+
+    $('#delete-payment').addClass('d-none');
+
+    $('#datepicker').removeClass('d-none');
   })
 
   $('#paymentModal').on('hidden.bs.modal', function(e) {

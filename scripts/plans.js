@@ -1,4 +1,7 @@
-var $ = require("../node_modules/jquery/dist/jquery.min");
+var $ = require('jquery');
+require('popper.js');
+require('bootstrap');
+
 var service = require("../scripts/service");
 var constants = require("../utils/constants")
 var { ipcRenderer } = require('electron');
@@ -59,6 +62,21 @@ function refreshPlans(userId) {
         $("#edit-plan").removeClass("d-none");
         $("#plan-modal-title").html("Edit Plan");
 
+        $('#delete-plan').removeClass('d-none');
+
+        id = $(this).attr("plan-id");
+
+        $('#delete-plan').unbind('click');
+        $('#delete-plan').click(function(e) {
+          statement = "wallet/api/planitem/delete.php?id=" + id;
+          api.delete(statement)
+          .then(function(response) {
+            refreshPlans(ipcRenderer.sendSync("get-id"));
+          }).catch(function(err) {
+            // Handle error
+          })
+        })
+
         $("#add-plan-name").val($(this).find("#plan-name").html());
 
         amount = $(this).find("#plan-amount").html();
@@ -73,7 +91,7 @@ function refreshPlans(userId) {
           $("#expense").prop("checked",  true);
         }
 
-        $("#planModal").attr("plan-id", $(this).attr("plan-id"));
+        $("#planModal").attr("plan-id", id);
       });
 
     });

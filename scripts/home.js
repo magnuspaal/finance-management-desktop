@@ -1,4 +1,6 @@
-var $ = require("../node_modules/jquery/dist/jquery.min");
+var $ = require('jquery');
+require('popper.js')
+require('bootstrap');
 
 var { ipcRenderer } = require('electron');
 var { Api } =  require('rest-api-handler');

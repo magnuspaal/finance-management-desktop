@@ -220,3 +220,19 @@ body {
         }
     }
 }
+
+// SELECTION MODAL
+#selection-dialog {
+    max-width: 220px;
+    .modal-header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        #selection-check-boxes {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    }
+    
+}

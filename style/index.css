@@ -203,4 +203,18 @@ body {
   flex-direction: column;
 }
 
+#selection-dialog {
+  max-width: 220px;
+}
+#selection-dialog .modal-header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#selection-dialog .modal-header #selection-check-boxes {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 /*# sourceMappingURL=index.css.map */

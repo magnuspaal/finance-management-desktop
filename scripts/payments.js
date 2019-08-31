@@ -1,4 +1,6 @@
-var $ = require("../node_modules/jquery/dist/jquery.min");
+var $ = require('jquery');
+require('popper.js');
+require('bootstrap');
 
 var { ipcRenderer } = require('electron');
 var { Api } =  require('rest-api-handler');
@@ -33,7 +35,7 @@ function refreshPayments(userId) {
       $('#month-item-' + index).append('<div id="month-payments-' + index + '"></div>');
       payments = getPaymentsOfMonth(date, data);
       $.each(payments, function( index_payment, value_payment) {
-        $('#month-payments-' + index).append('<div date="' + (date.getMonth() + 1) + "/" + value_payment.date.day + "/" + date.getFullYear() + '" class="card shadow-sm payment-card" style="margin-bottom: 20px;" id="payment-card-' + value_payment['id'] + '" data-toggle="modal" data-target="#paymentModal" payment-id="' + value_payment['id'] + '" hash="' + value_payment['hash'] + '"></div>');
+        $('#month-payments-' + index).append('<div date="' + (date.getMonth() + 1) + "/" + value_payment.date.day + "/" + date.getFullYear() + '" class="card shadow-sm payment-card" style="margin-bottom: 20px;" id="payment-card-' + value_payment['id'] + '" payment-id="' + value_payment['id'] + '" hash="' + value_payment['hash'] + '"></div>');
         $('#payment-card-' + value_payment['id']).append('<div class="card-body card-payment-body" id="payment-card-body-' + value_payment['id'] + '"></div>');
         $('#payment-card-body-' + value_payment['id']).append('<h3 class="payment-day">' + value_payment.date.day + '</h3>');
         $('#payment-card-body-' + value_payment['id']).append('<div class="payment-info" id="payment-info-' + value_payment['id'] + '"></div>')
@@ -53,7 +55,50 @@ function refreshPayments(userId) {
         });
 
         // Edit payment when its card is clicked.
+        $('.payment-card').unbind('click');
         $('.payment-card').click(function(e) {
+          date = $(this).attr("date");
+          amount = $(this).find("#payment-amount").html();
+
+          id = $(this).attr("payment-id");
+          hash = $(this).attr("hash");
+          if($(this).attr('hash') != "") {
+            $("#selectionModal").modal('show');
+            $('#save-selection').unbind('click');
+            $('#save-selection').click(function(e) {
+              if($('input[id=\'this\']:checked').val()) {
+                $('.datepicker').removeClass('d-none');
+                hash = "";
+              } else {
+                $('.datepicker').addClass('d-none');
+              }
+              if (amount.charAt(0) === "+") {
+                $("#incoming").prop("checked",  true);
+                $("#outgoing").prop("checked",  false);
+              } else {
+                $("#incoming").prop("checked",  false);
+                $("#outgoing").prop("checked",  true);
+              }
+              $("#selectionModal").modal('hide');
+              $("#paymentModal").modal('show');
+            })
+          } else {
+            $("#paymentModal").modal('show');
+            $('.datepicker').removeClass('d-none');
+          }
+          $('#delete-payment').removeClass('d-none');
+
+          $('#delete-payment').unbind('click');
+          $('#delete-payment').click(function(e) {
+            statement = "wallet/api/payment/delete.php?" + (hash == "" ? "id=" + id : "hash=" + hash)
+            api.delete(statement)
+            .then(function(response) {
+              refreshPayments(ipcRenderer.sendSync("get-id"));
+            }).catch(function(err) {
+              // Handle error
+            })
+          })
+          
           $('#payment-modal-title').html("Edit Payment");
           
           $('#payment-regularity').addClass('d-none');
@@ -65,11 +110,6 @@ function refreshPayments(userId) {
           $("#save-payment").addClass("d-none");
           $("#edit-payment").removeClass("d-none");
 
-          amount = $(this).find("#payment-amount").html();
-          date = $(this).attr("date");
-          
-          $("#add-payment-amount").val(amount.substring(1));
-
           if (amount.charAt(0) === "+") {
             $("#incoming").prop("checked",  true);
             $("#outgoing").prop("checked",  false);
@@ -77,11 +117,13 @@ function refreshPayments(userId) {
             $("#incoming").prop("checked",  false);
             $("#outgoing").prop("checked",  true);
           }
+          
+          $("#add-payment-amount").val(amount.substring(1));
 
           nav.setDatePickerDate(date, date);
 
-          $("#paymentModal").attr("payment-id", $(this).attr("payment-id"));
-          $("#paymentModal").attr("hash", $(this).attr("hash"));
+          $("#paymentModal").attr("payment-id", id);
+          $("#paymentModal").attr("hash", hash);
         })
       })
     });

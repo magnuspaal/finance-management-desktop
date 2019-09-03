@@ -7,6 +7,7 @@ var { Api } =  require('rest-api-handler');
 var api = new Api('https://magnuspaal.com');
 
 var constants = require("../utils/constants");
+var service = require("../scripts/service");
 var nav = require("../scripts/nav");
 
 module.exports = {
@@ -122,7 +123,10 @@ function refreshPayments(userId) {
 
           nav.setDatePickerDate(date, date);
 
+          service.refreshBalance();
+
           $("#paymentModal").attr("payment-id", id);
+
           $("#paymentModal").attr("hash", hash);
         })
       })

@@ -24,6 +24,7 @@ $(document).ready(function(e) {
   setSingleDatePicker();
 
   //// NAV ///////////////////////////////////////////
+  $('nav li').unbind('click');
   $('nav li').click(function(e) {
     e.preventDefault();
     var pageToLoad = $(this).children('a').attr('href');
@@ -76,6 +77,7 @@ $(document).ready(function(e) {
   /////////////////////////////////////////////////////////
 
   //// ADD PLAN ///////////////////////////////////////////
+  $("#add-plan-button").unbind('click');
   $("#add-plan-button").click(function(e) {
     $("#add-plan-name").val("");
     $("#add-plan-amount").val("");
@@ -100,7 +102,7 @@ $(document).ready(function(e) {
     addPlan(ipcRenderer.sendSync("get-id"), name, amount, type)
     .then(function(e) {
       plans = require("../scripts/plans");
-      plans.refreshPlans(ipcRenderer.sendSync("get-id"))
+      plans.refreshPlans(ipcRenderer.sendSync("get-id"));
     });
   })
 
@@ -116,6 +118,7 @@ $(document).ready(function(e) {
   ////////////////////////////////////////////////////////////
 
   //// ADD PAYMENT ///////////////////////////////////////////
+  $("#add-payment-button").unbind('click');
   $('#add-payment-button').click(function(e) {
     $('#payment-regularity').addClass('d-block');
     $('#payment-regularity').removeClass('d-none');
@@ -129,7 +132,7 @@ $(document).ready(function(e) {
 
     $('#delete-payment').addClass('d-none');
 
-    $('#datepicker').removeClass('d-none');
+    $('.datepicker').removeClass('d-none');
   })
 
   $('#paymentModal').on('hidden.bs.modal', function(e) {
@@ -161,7 +164,8 @@ $(document).ready(function(e) {
     hash = regularity == constants.SINGLE ? null : sha256(name + crs({length: 16, type: 'base64'}))
     addPayments(userId, firstDate, lastDate, name, amount, type, regularity, hash).then(function(response) {
       payments = require("../scripts/payments");
-      payments.refreshBalance(ipcRenderer.sendSync("get-id"));
+      payments.refreshPayments(ipcRenderer.sendSync("get-id"));
+
     })
     .catch(function(err) {
 
@@ -214,7 +218,6 @@ $(document).ready(function(e) {
 
   $("#edit-plan").unbind('click');
   $("#edit-plan").click(function(e) {
-    console.log("heyyy");
     api.put('wallet/api/planitem/edit.php', {
       id: id,
       name: $("#add-plan-name").val(),
@@ -239,7 +242,7 @@ $(document).ready(function(e) {
 
     hash = $('#paymentModal').attr("hash");
 
-    id = hash != null ? null : $('#paymentModal').attr("payment-id");
+    id = hash != "" ? null : $('#paymentModal').attr("payment-id");
 
     api.put('wallet/api/payment/edit.php', {
       id: id,

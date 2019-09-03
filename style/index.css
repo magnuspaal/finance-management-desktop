@@ -211,10 +211,19 @@ body {
   align-items: center;
   flex-direction: column;
 }
+#selection-dialog .modal-header .modal-title {
+  margin-bottom: 20px;
+}
 #selection-dialog .modal-header #selection-check-boxes {
   display: flex;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
+}
+#selection-dialog .modal-header #selection-check-boxes .form-check-input {
+  cursor: pointer;
+}
+#selection-dialog .modal-header #selection-check-boxes .form-check-label {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=index.css.map */

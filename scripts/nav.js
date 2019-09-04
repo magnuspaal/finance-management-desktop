@@ -243,14 +243,14 @@ $(document).ready(function(e) {
     hash = $('#paymentModal').attr("hash");
 
     id = hash != "" ? null : $('#paymentModal').attr("payment-id");
-
+    
     api.put('wallet/api/payment/edit.php', {
       id: id,
       hash: hash,
       date: date,
       name: $("#add-payment-name").val(),
       amount: $("#add-payment-amount").val(),
-      type: $("#income").prop("checked") ? constants.INCOMING : constants.OUTGOING
+      type: $("#incoming").prop("checked") ? constants.INCOMING : constants.OUTGOING
     }).then(function(response) {
       $("#add-payment-name").val("");
       $("#add-payment-amount").val("");

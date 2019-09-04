@@ -58,18 +58,19 @@ function refreshPayments(userId) {
         // Edit payment when its card is clicked.
         $('.payment-card').unbind('click');
         $('.payment-card').click(function(e) {
-          date = $(this).attr("date");
-          amount = $(this).find("#payment-amount").html();
-
-          id = $(this).attr("payment-id");
-          hash = $(this).attr("hash");
+          var date = $(this).attr("date");
+          var amount = $(this).find("#payment-amount").html();
+          var id = $(this).attr("payment-id");
+          var hash = $(this).attr("hash");
+          var name = $(this).find("#payment-name").html()
           if($(this).attr('hash') != "") {
             $("#selectionModal").modal('show');
             $('#save-selection').unbind('click');
             $('#save-selection').click(function(e) {
-              if($('input[id=\'this\']:checked').val()) {
+              if($('#this').prop('checked')) {
                 $('.datepicker').removeClass('d-none');
                 hash = "";
+                console.log('yes')
               } else {
                 $('.datepicker').addClass('d-none');
               }
@@ -82,56 +83,62 @@ function refreshPayments(userId) {
               }
               $("#selectionModal").modal('hide');
               $("#paymentModal").modal('show');
+              openPaymentModal(name, hash, id, amount, date);
             })
           } else {
             $("#paymentModal").modal('show');
             $('.datepicker').removeClass('d-none');
+            openPaymentModal(name, hash, id, amount, date);
           }
-          $('#delete-payment').removeClass('d-none');
-
-          $('#delete-payment').unbind('click');
-          $('#delete-payment').click(function(e) {
-            statement = "wallet/api/payment/delete.php?" + (hash == "" ? "id=" + id : "hash=" + hash)
-            api.delete(statement)
-            .then(function(response) {
-              refreshPayments(ipcRenderer.sendSync("get-id"));
-            }).catch(function(err) {
-              // Handle error
-            })
-          })
-          
-          $('#payment-modal-title').html("Edit Payment");
-          
-          $('#payment-regularity').addClass('d-none');
-
-          $('#payment-regularity').removeClass('d-block');
-
-          $("#add-payment-name").val($(this).find("#payment-name").html());
-
-          $("#save-payment").addClass("d-none");
-          $("#edit-payment").removeClass("d-none");
-
-          if (amount.charAt(0) === "+") {
-            $("#incoming").prop("checked",  true);
-            $("#outgoing").prop("checked",  false);
-          } else {
-            $("#incoming").prop("checked",  false);
-            $("#outgoing").prop("checked",  true);
-          }
-          
-          $("#add-payment-amount").val(amount.substring(1));
-
-          nav.setDatePickerDate(date, date);
-
-          service.refreshBalance();
-
-          $("#paymentModal").attr("payment-id", id);
-
-          $("#paymentModal").attr("hash", hash);
         })
       })
     });
   });
+}
+
+function openPaymentModal(name, hash, id, amount, date) {
+  $('#delete-payment').removeClass('d-none');
+
+  $('#delete-payment').unbind('click');
+  $('#delete-payment').click(function(e) {
+    statement = "wallet/api/payment/delete.php?" + (hash == "" ? "id=" + id : "hash=" + hash)
+    api.delete(statement)
+    .then(function(response) {
+      refreshPayments(ipcRenderer.sendSync("get-id"));
+    }).catch(function(err) {
+      // Handle error
+    })
+  })
+  
+  $('#payment-modal-title').html("Edit Payment");
+  
+  $('#payment-regularity').addClass('d-none');
+
+  $('#payment-regularity').removeClass('d-block');
+
+  $("#add-payment-name").val(name);
+
+  $("#save-payment").addClass("d-none");
+  $("#edit-payment").removeClass("d-none");
+
+  if (amount.charAt(0) === "+") {
+    $("#incoming").prop("checked",  true);
+    $("#outgoing").prop("checked",  false);
+  } else {
+    $("#incoming").prop("checked",  false);
+    $("#outgoing").prop("checked",  true);
+  }
+  
+  $("#add-payment-amount").val(amount.substring(1));
+
+  nav.setDatePickerDate(date, date);
+
+  service.refreshBalance();
+  console.log(id);
+  console.log(hash);
+
+  $("#paymentModal").attr("payment-id", id);
+  $("#paymentModal").attr("hash", hash);
 }
 
 function findMonthArray(paymentArray) {

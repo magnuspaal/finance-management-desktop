@@ -9,7 +9,7 @@ app.on('ready', function() {
     webPreferences: {
       nodeIntegration: true
     },
-    resizable: true,
+    resizable: false,
     titleBarStyle: "hidden"
   })
 

@@ -28,11 +28,13 @@ function refreshFuture(userId) {
         $("#future-list").empty();
         currentBalance = ipcRenderer.sendSync("get-balance");
         dayAmounts = findDayAmounts(data, currentBalance);
+        dayChange = findDayChange(data)
         keys = Object.keys(dayAmounts);
         selected = null;
         keys.sort(function(a,b) {
             return new Date(a).getTime() - new Date(b).getTime();
         });
+        var last = 0;
         $.each(keys, function(index, value) {
             date = new Date(value);
             dateString = date.getDate() + " " + constants.MONTH_NAMES[date.getMonth()] + " " + date.getFullYear();
@@ -40,6 +42,7 @@ function refreshFuture(userId) {
             $("#future-card-" + index).append('<div class="card-body future-card-body" id="future-card-body-' + index + '" amount="' + dayAmounts[date] + '" date="' + dateString + '"></div>');
             $("#future-card-body-" + index).append('<div class="future-card-text" id="future-card-text-' + index + '"></div>');
             $("#future-card-text-" + index).append('<h5>' + dateString + '</h5>')
+            $("#future-card-text-" + index).append('<h5 class="' + (dayChange[date] < 0 ? "text-danger" : "text-success") + '">' + dayChange[date] + '</h5>')
             $("#future-card-text-" + index).append('<h6>' + dayAmounts[date] + '</h6>')
 
             $(".future-card-body").unbind().click(function() {
@@ -80,4 +83,29 @@ function findDayAmounts(data, currentBalance) {
         dayAmounts[date] = parseFloat(amount).toFixed(2);
     })
     return dayAmounts;
+}
+
+function findDayChange(data) {
+    data.sort(function(a, b) {
+        return new Date(a.date.year, a.date.month, a.date.day).getTime() - new Date(b.date.year, b.date.month, b.date.day).getTime();
+    })
+
+    var dayChange = new Object();
+
+    $.each(data, function(index, value) {
+        var amount = 0;
+        date = new Date(value.date.year, value.date.month - 1, value.date.day);
+        if (!(date in dayChange)) {
+            dayChange[date] = 0.0;
+        }
+
+        if (value.type == constants.OUTGOING) {
+            amount -= parseFloat(value.amount);
+        } else {
+            amount += parseFloat(value.amount);
+        }
+
+        dayChange[date] += parseFloat(parseFloat(amount).toFixed(2));
+    })
+    return dayChange;
 }
